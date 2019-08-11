@@ -1,14 +1,14 @@
 import os
+import json
 import urllib.request
 from flask import render_template, flash, redirect, url_for, request
 from werkzeug.utils import secure_filename
 from app import app
-from app.forms import LoginForm, HomePage, OrderPage, ManufactureForm
+from app.forms import LoginForm, HomePage, OrderPage, ManufactureForm, ManufacturingProgressPage
 
 users = ''
 FINAL_UPLOAD_FOLDER = 'Manufacturing'
 MANUFACTURING_UPLOAD_FOLDER = 'Manufacturing/Part'
-folderNum = 0
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = LoginForm()
@@ -74,25 +74,23 @@ def order():
 		return redirect(url_for('order'))
 	return render_template('order.html', title='Order Form', form=form3)
 	
-@app.route('/manufacture', methods=['GET', 'POST'])
-def manufacture():
+@app.route('/manufactureform', methods=['GET', 'POST'])
+def manufactureform():
 	form4 = ManufactureForm()
 	if request.method == 'POST' and form4.validate_on_submit():
 		if 'file' not in request.files:
 			flash('No file part')
-			return redirect(url_for('manufacture'))
-
-		global folderNum
-		UPLOAD_FOLDER = MANUFACTURING_UPLOAD_FOLDER + str(folderNum)
-		folderNum+=1
-		os.makedirs(UPLOAD_FOLDER)
+			return redirect(url_for('manufactureform'))
 
 		file = request.files['file']
+
+		UPLOAD_FOLDER = MANUFACTURING_UPLOAD_FOLDER + file.filename
+		os.makedirs(UPLOAD_FOLDER)
 		app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 		if file.filename == '':
 			flash('No file selected')
-			return redirect(url_for('manufacture'))
+			return redirect(url_for('manufactureform'))
 		else:
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -104,13 +102,18 @@ def manufacture():
 				f.write("QTY: %s \r\n"%(form4.manufactureQTY.data))
 				f.close()
 
-			with open(os.path.join(FINAL_UPLOAD_FOLDER,"AllPartInfo.txt"), "a+") as e:
-				e.write("\r\nFirst and Last Name: %s %s \r\n"%(form4.manufactureFirstName.data, form4.manufactureLastName.data))
-				e.write("Subteam: %s \r\n"%(form4.manufactureSubteam.data))
-				e.write("Due Date: %s/%s/%s \r\n"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data))
-				e.write("QTY: %s \r\n"%(form4.manufactureQTY.data))
-				e.write("File Name:%s \r\n"%(filename))
-				e.close()
+			with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.json"), "a+") as e:
+				data={}
+				dueDate = "%s/%s/%s"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data)
+				data['Part']=[]
+				data['Part'].append({'name': form4.manufactureFirstName.data, 'subteam': form4.manufactureSubteam.data, 'date': dueDate, 'qty': form4.manufactureQTY.data, 'file': filename, 'status': 'Not Started', 'hours': '0'})
+				json.dump(data, e)
+
 			flash('File successfully uploaded')
-			return redirect(url_for('manufacture'))
-	return render_template('manufacture.html', title='Manufacture Part Form', form=form4)
+			return redirect(url_for('manufactureform'))
+	return render_template('manufactureform.html', title='Manufacture Part Form', form=form4)
+
+@app.route('/manufacture', methods=['GET', 'POST'])
+def manufacturingShowcase():
+	form5 = ManufacturingProgressPage()
+	return render_template('manufacture.html', title='Manufacture Progress', form=form5)

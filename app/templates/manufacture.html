@@ -34,54 +34,17 @@
     </style>  
     <body>
     <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
-    <h1 style="color:white;">Manufacture Part Form</h1>
+    <h1 style="color:white;">Manufacture Progress</h1>
     <form action="" method="post" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p style="color:white; height: 60px;">
-            {{ form.manufactureFirstName.label }}<br>
-            {{ form.manufactureFirstName(size=32, id='middle') }}<br>
-            {% for error in form.manufactureFirstName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            {% for row in form.allNotCompletedTasks %}
+                <ul>
+                    <li style="color:white;"> {{row}} </li>
+                </ul>
             {% endfor %}
         </p>
-        <p style="color:white;  height: 60px;">
-            {{ form.manufactureLastName.label }}<br>
-            {{ form.manufactureLastName(size=32, id='middle') }}<br>
-            {% for error in form.manufactureLastName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <h1 style="color:white;">Your Subteam</h1>
-        <p style="color:white;">
-            {{ form.manufactureSubteam(id='middle') }}<br>
-            {% for error in form.manufactureSubteam.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-
-        <h1 style="color:white;">Required Date</h1>
-        <p style="color:white;">
-            &nbsp;&nbsp;MM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YYYY <br>
-            {{ form.manufactureMonth(size=2, id='middle') }} {{ form.manufactureDay(size=2, id='middle') }} {{ form.manufactureYear(size=4, id='middle') }}<br>
-        </p>
-
-         <h1 style="color:white; font-size: 25px;">QTY:&nbsp;&nbsp;&nbsp; {{ form.manufactureQTY(size=3, id='middle') }} </h1>
-
-        <p style="color:white;">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    <ul class=flashes>
-                    {% for message in messages %}
-                        <li style="color:white;"> {{message}} </li>
-                    {% endfor %}
-                    </ul>
-                {% endif %}
-            {% endwith %}
-            <input type="file" name="file" autocomplete="off" required style="color:white;  font-size: 20px;"> 
-        </p>
-
-        <p>{{ form.submitPart(id='larger') }}</p>
+        <p>{{ form.submitChange(id='larger') }}</p>
     </body>
     </form>
 {% endblock %}

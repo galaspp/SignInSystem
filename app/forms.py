@@ -1,3 +1,5 @@
+import os
+import json
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
@@ -5,6 +7,8 @@ from wtforms.validators import DataRequired
 allMajors = [('NA', 'N/A'), ('ME', 'Mechanical Engineering'), ('EE', 'Electrical Engineering'), ('CPE', 'Computer Engineering'), ('CS', 'Computer Science'), ('SW', 'Software Engineering'), ('Other', 'Other')]
 allYears = [('F', 'Freshman'), ('S', 'Sophomore'), ('J', 'Junior'), ('SN', 'Senior'), ('G', 'Graduate'), ('A', 'Alum')]
 allSubteams = [('NA', 'N/A'), ('aero', 'Aero'), ('chass', 'Chassis'), ('cool', 'Cooling'), ('drive', 'Drivetrain'), ('ele','Electrical'), ('engine', 'Engine'), ('susp', 'Suspension'), ('unspr', 'Unsprung')]
+FINAL_UPLOAD_FOLDER = 'Manufacturing'
+
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     firstName = StringField('First Name', validators=[DataRequired()])
@@ -83,3 +87,32 @@ class ManufactureForm(FlaskForm):
 	manufactureQTY = StringField('QTY')
 
 	submitPart = SubmitField('Submit Part')
+
+class ManufacturingProgressPage(FlaskForm):
+	manufacturingName = []
+	manufacturingSubteam = []
+	manufacturingDate = []
+	manufacturingQty = []
+	manufacturingFile = []
+	manufacturingStatus = []
+	progress = (['NotStarted', 'Not Started'], ['InProgress', 'In Progress'], ['Completed', 'Completed'])
+
+	with open('Manufacturing/AllPartInfo.json') as e:
+		data = json.loads(e.read())
+		for p in data['Part']:
+			manufacturingName.append(p['name'])
+			manufacturingSubteam.append(p['subteam'])
+			manufacturingDate.append(p['date'])
+			manufacturingQty.append(p['qty'])
+			manufacturingFile.append(p['file'])
+			manufacturingStatus.append(p['status'])
+
+	allNotCompletedTasks = []
+	for (status,file) in zip(manufacturingStatus, manufacturingFile):
+		if status != "Complete":
+			allNotCompletedTasks.append(file)
+
+	remainingTasks = SelectField('Tasks', choices=allNotCompletedTasks, validators=[DataRequired()])
+	progressOnTask = SelectField('Progress', choices=progress, validators=[DataRequired()])
+	submitChange = SubmitField('Submit Change')
+
