@@ -1,0 +1,18 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Rose Grand Prix Engineering</title>
+        {% else %}
+        <title>Rose Grand Prix Engineering</title>
+        {% endif %}
+    </head>
+    <body>
+        <div style="color:white; height: 20px;">
+            Rose Grand Prix Engineering:
+            <a href="{{ url_for('index') }}"; style="color:white;">Home</a>
+            <a href="{{ url_for('signup') }}"; style="color:white;">SignUp</a>
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

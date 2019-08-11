@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        body{
+            border-style: solid;
+            background-color: #800000;
+            width: 900px;
+            height: 1642px;
+            margin: auto;
+            position: relative;
+        }
+        p{
+            width: 900px;
+            height: 50px;
+            font-size: 25px;
+        }
+        h1{
+            font-size: 40px;
+        }
+        #middle {
+            font-size: 20px;
+        } 
+        #larger {
+            font-size: 25px;
+        } 
+        .checkbox {
+            height: 20px;
+            width: 20px;
+        }
+    </style>  
+    <body>
+    <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
+    <h1 style="color:white;">Sign Up</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p style="color:white; height: 60px;">
+            {{ form.username.label }}<br>
+            {{ form.username(size=32, id='middle') }}<br>
+            {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="color:white;  height: 60px;">
+            {{ form.firstName.label }}<br>
+            {{ form.firstName(size=32, id='middle') }}<br>
+            {% for error in form.firstName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="color:white;  height: 60px;">
+            {{ form.lastName.label }}<br>
+            {{ form.lastName(size=32, id='middle') }}<br>
+            {% for error in form.lastName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <h1 style="color:white;">Your Interests</h1>
+        <p style="color:white;">{{ form.frame(class_="checkbox") }} {{ form.frame.label }}</p>
+        <p style="color:white;">{{ form.handling(class_="checkbox") }} {{ form.handling.label }}</p>
+        <p style="color:white;"> {{ form.powertrain(class_="checkbox") }} {{ form.powertrain.label }}</p>
+        <p style="color:white;">{{ form.electrical(class_="checkbox") }} {{ form.electrical.label }}</p>
+
+        <h1 style="color:white;">Your Major</h1>
+        <p> {{ form.major(id='middle') }}</p>
+
+        <h1 style="color:white;">Your Year</h1>
+        <p>{{ form.year(id='middle') }}</p>
+
+        <h1 style="color:white;">Past Experience</h1>
+        <p  style="height: 90px;">{{ form.experience(cols="50", rows="4", id='middle')}}</p>
+
+        <h1 style="color:white;">Give Us Something To Remember You By</h1>
+        <p style="height: 100px;">{{ form.remeberance(cols="50", rows="4", id='middle')}}</p>
+
+        <p>{{ form.submit(id='larger') }}</p>
+    </body>
+    </form>
+{% endblock %}

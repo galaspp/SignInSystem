@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        body{
+            border-style: solid;
+            background-color: #800000;
+            width: 900px;
+            height: 1447px;
+            margin: auto;
+            position: relative;
+        }
+        p{
+            width: 900px;
+            height: 50px;
+            font-size: 25px;
+        }
+        h1{
+            font-size: 40px;
+        }
+        #qtyWidth{
+            width: 25%;
+        }
+        #middle {
+            font-size: 20px;
+        } 
+        #larger {
+            font-size: 25px;
+        } 
+        .checkbox {
+            height: 20px;
+            width: 20px;
+        }
+    </style>  
+    <body>
+    <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
+    <h1 style="color:white;">Order Form</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p style="color:white; height: 60px;">
+            {{ form.orderFirstName.label }}<br>
+            {{ form.orderFirstName(size=32, id='middle') }}<br>
+            {% for error in form.orderFirstName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p style="color:white;  height: 60px;">
+            {{ form.orderLastName.label }}<br>
+            {{ form.orderLastName(size=32, id='middle') }}<br>
+            {% for error in form.orderLastName.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <h1 style="color:white;">Your Subteam</h1>
+        <p style="color:white;">
+            {{ form.subteam(id='middle') }}<br>
+            {% for error in form.subteam.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <h1 style="color:white; font-size: 25px;">QTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Link</h1>
+
+        <p style="color:white;">{{ form.qty(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty1(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link1(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty2(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link2(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty3(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link3(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty4(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link4(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty5(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link5(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty6(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link6(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty7(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link7(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty8(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link8(size=70, id='middle') }} </p>
+
+        <p style="color:white;">{{ form.qty9(size=3, id='middle') }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ form.link9(size=70, id='middle') }} </p>
+
+        <p>{{ form.submitOrder(id='larger') }}</p>
+    </body>
+    </form>
+{% endblock %}
