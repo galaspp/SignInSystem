@@ -13,8 +13,7 @@ def signup():
     form = LoginForm()
     global users
     if form.validate_on_submit():
-        flash('Login requested for user {}'.format(
-            form.username.data))
+        flash('Login requested for user {}'.format(form.username.data))
         users = form.firstName.data
         f = open("UserInfo.txt", "a+")
         f.write("Username: %s \r\n" %(form.username.data))
@@ -114,7 +113,6 @@ def manufactureform():
 			flash('File successfully uploaded')
 			return redirect(url_for('manufacturingShowcase'))
 	return render_template('manufactureform.html', title='Manufacture Part Form', form=form4)
-
 
 @app.route('/manufacture', methods=['GET', 'POST'])
 def manufacturingShowcase():
