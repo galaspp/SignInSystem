@@ -1,5 +1,5 @@
 import os
-import json
+import csv
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired
@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired
 allMajors = [('NA', 'N/A'), ('ME', 'Mechanical Engineering'), ('EE', 'Electrical Engineering'), ('CPE', 'Computer Engineering'), ('CS', 'Computer Science'), ('SW', 'Software Engineering'), ('Other', 'Other')]
 allYears = [('F', 'Freshman'), ('S', 'Sophomore'), ('J', 'Junior'), ('SN', 'Senior'), ('G', 'Graduate'), ('A', 'Alum')]
 allSubteams = [('NA', 'N/A'), ('Aero', 'Aero'), ('Chassis', 'Chassis'), ('Cooling', 'Cooling'), ('Drivetrain', 'Drivetrain'), ('Electrical','Electrical'), ('Engine', 'Engine'), ('Suspension', 'Suspension'), ('Unsprung', 'Unsprung')]
-progress = (['NotStarted', 'Not Started'], ['InProgress', 'In Progress'], ['Completed', 'Completed'])
+progress = (['Not Started', 'Not Started'], ['In Progress', 'In Progress'], ['Completed', 'Completed'])
 
 FINAL_UPLOAD_FOLDER = 'Manufacturing'
 
@@ -97,20 +97,25 @@ class ManufacturingProgressPage(FlaskForm):
 	manufacturingQty = []
 	manufacturingFile = []
 	manufacturingStatus = []
-	with open('Manufacturing/AllPartInfo.json') as e:
-		data = json.loads(e.read())
-		for p in data['Part']:
-			manufacturingName.append(p['name'])
-			manufacturingSubteam.append(p['subteam'])
-			manufacturingDate.append(p['date'])
-			manufacturingQty.append(p['qty'])
-			manufacturingFile.append(p['file'])
-			manufacturingStatus.append(p['status'])
+	with open('Manufacturing/AllPartInfo.txt', 'r') as e:
+		data = csv.reader(e, delimiter=',')
+		lineCount = 0
+		for p in data:
+			if lineCount == 0:
+				lineCount+=1
+			else:
+				manufacturingName.append(p[0])
+				manufacturingSubteam.append(p[1])
+				manufacturingDate.append(p[2])
+				manufacturingQty.append(p[3])
+				manufacturingFile.append(p[4])
+				manufacturingStatus.append(p[5])
+				lineCount+=1
 
 	allNotCompletedTasks = []
 	for (status,file) in zip(manufacturingStatus, manufacturingFile):
-		if status != "Complete":
-			allNotCompletedTasks.append(file)
+		if status != "Completed":
+			allNotCompletedTasks.append([file,file])
 
 	remainingTasks = SelectField('Tasks', choices=allNotCompletedTasks, validators=[DataRequired()])
 	progressOnTask = SelectField('Progress', choices=progress, validators=[DataRequired()])
@@ -124,17 +129,38 @@ class ManufacturingProgressPage(FlaskForm):
 		self.manufacturingFile.clear()
 		self.manufacturingStatus.clear()
 		self.allNotCompletedTasks.clear()
-		with open('Manufacturing/AllPartInfo.json') as e:
-			data = json.loads(e.read())
-			for p in data['Part']:
-				self.manufacturingName.append(p['name'])
-				self.manufacturingSubteam.append(p['subteam'])
-				self.manufacturingDate.append(p['date'])
-				self.manufacturingQty.append(p['qty'])
-				self.manufacturingFile.append(p['file'])
-				self.manufacturingStatus.append(p['status'])
+		with open('Manufacturing/AllPartInfo.txt', 'r') as e:
+			data = csv.reader(e, delimiter=',')
+			lineCount = 0
+			for p in data:
+				if lineCount == 0:
+					lineCount+=1
+				else:
+					self.manufacturingName.append(p[0])
+					self.manufacturingSubteam.append(p[1])
+					self.manufacturingDate.append(p[2])
+					self.manufacturingQty.append(p[3])
+					self.manufacturingFile.append(p[4])
+					self.manufacturingStatus.append(p[5])
+					lineCount+=1
 
 		for (status,file) in zip(self.manufacturingStatus, self.manufacturingFile):
-			if status != "Complete":
-				self.allNotCompletedTasks.append(file)
+			if status != 'Completed':
+				self.allNotCompletedTasks.append([file, file])
+
+
+	def updateProgress(self, submitFile, updatedProgress):
+		lineCount = 1
+		for files in self.manufacturingFile:
+			if files == submitFile:
+				break
+			else:
+				lineCount+=1
+
+		file = csv.reader(open('Manufacturing/AllPartInfo.txt'))
+		lines = list(file)
+		lines[lineCount][5] = updatedProgress
+
+		writer = csv.writer(open('Manufacturing/AllPartInfo.txt', 'w'))
+		writer.writerows(lines)
 

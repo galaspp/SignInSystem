@@ -35,7 +35,7 @@
             width: 20px;
         }
         .boxed {
-            border: 1px solid white ;
+            border: 1px solid black ;
             background:#fff;
         }
     </style>  
@@ -44,14 +44,15 @@
     <h1 style="color:white;">Manufacture Progress</h1>
     <form action="" method="post" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <p style="color:white; height: 60px;">
+        <pre style="color:white; height: 15px; font-size: 25px;" class="tab">&nbsp;&nbsp;&nbsp;Name    Subteam     Due Date    QTY     File     Status </pre>
+        <p style="color:white; height: 0px;">
             {% for i in range(0, len) %}
                 <ul class="boxed">
                 {{form.manufacturingName[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingSubteam[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingFile[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingStatus[i]}}<br>
                 </ul>
             {% endfor %}
         </p>
-        <p>{{ form.submitChange(id='larger') }}</p>
+        <p style="color:white;"> {{ form.remainingTasks(id='middle') }} {{ form.progressOnTask(id='middle') }} {{ form.submitChange(id='middle') }}</p>
     </body>
     </form>
 {% endblock %}

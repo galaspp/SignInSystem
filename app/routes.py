@@ -112,7 +112,7 @@ def manufactureform():
 				e.close()
 
 			flash('File successfully uploaded')
-			return redirect(url_for('manufactureform'))
+			return redirect(url_for('manufacturingShowcase'))
 	return render_template('manufactureform.html', title='Manufacture Part Form', form=form4)
 
 
@@ -121,4 +121,8 @@ def manufacturingShowcase():
 	form5 = ManufacturingProgressPage()
 	if request.method == 'GET':
 		form5.updateForm()
+	if request.method == 'POST' and form5.validate_on_submit():
+		form5.updateProgress(form5.remainingTasks.data, form5.progressOnTask.data)
+		form5.updateForm()
+		return redirect(url_for('manufacturingShowcase'))
 	return render_template('manufacture.html', title='Manufacture Progress', form=form5, len=len(form5.manufacturingName))

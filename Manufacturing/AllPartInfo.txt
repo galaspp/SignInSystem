@@ -1,2 +1,9 @@
 name,subteam,date,qty,file,progress
-Piotr,Drivetrain,22/33/2020,2,Buggy.skp,Not Started
+Piotr,Drivetrain,22/33/2020,2,Buggy.skp,Completed
+Piotr,Chassis,22/33/2020,2,School_Schedual.xlsx,Completed
+Piotr,Chassis,22/33/2020,2,Piotr_Galas_CSSE230_CodeofEthics.docx,Completed
+Piotr,Cooling,22/33/2020,2,Code_Questions_and_Answers.txt,Completed
+Piotr,Aero,22/33/2020,2,ETC_Rules_and_Plan.txt,Completed
+Piotr,Chassis,22/33/2020,2,001-070-157_2.jpg,Completed
+Piotr,Aero,22/33/2020,2,42765174_307380693191178_1087877377414922240_n.jpg,Completed
+Piotr,Chassis,22/33/2020,2,001-070-586.jpg,Completed
