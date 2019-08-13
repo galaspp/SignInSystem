@@ -6,7 +6,9 @@ from wtforms.validators import DataRequired
 
 allMajors = [('NA', 'N/A'), ('ME', 'Mechanical Engineering'), ('EE', 'Electrical Engineering'), ('CPE', 'Computer Engineering'), ('CS', 'Computer Science'), ('SW', 'Software Engineering'), ('Other', 'Other')]
 allYears = [('F', 'Freshman'), ('S', 'Sophomore'), ('J', 'Junior'), ('SN', 'Senior'), ('G', 'Graduate'), ('A', 'Alum')]
-allSubteams = [('NA', 'N/A'), ('aero', 'Aero'), ('chass', 'Chassis'), ('cool', 'Cooling'), ('drive', 'Drivetrain'), ('ele','Electrical'), ('engine', 'Engine'), ('susp', 'Suspension'), ('unspr', 'Unsprung')]
+allSubteams = [('NA', 'N/A'), ('Aero', 'Aero'), ('Chassis', 'Chassis'), ('Cooling', 'Cooling'), ('Drivetrain', 'Drivetrain'), ('Electrical','Electrical'), ('Engine', 'Engine'), ('Suspension', 'Suspension'), ('Unsprung', 'Unsprung')]
+progress = (['NotStarted', 'Not Started'], ['InProgress', 'In Progress'], ['Completed', 'Completed'])
+
 FINAL_UPLOAD_FOLDER = 'Manufacturing'
 
 class LoginForm(FlaskForm):
@@ -95,8 +97,6 @@ class ManufacturingProgressPage(FlaskForm):
 	manufacturingQty = []
 	manufacturingFile = []
 	manufacturingStatus = []
-	progress = (['NotStarted', 'Not Started'], ['InProgress', 'In Progress'], ['Completed', 'Completed'])
-
 	with open('Manufacturing/AllPartInfo.json') as e:
 		data = json.loads(e.read())
 		for p in data['Part']:
@@ -115,4 +115,26 @@ class ManufacturingProgressPage(FlaskForm):
 	remainingTasks = SelectField('Tasks', choices=allNotCompletedTasks, validators=[DataRequired()])
 	progressOnTask = SelectField('Progress', choices=progress, validators=[DataRequired()])
 	submitChange = SubmitField('Submit Change')
+
+	def updateForm(self):
+		self.manufacturingName.clear()
+		self.manufacturingSubteam.clear()
+		self.manufacturingDate.clear()
+		self.manufacturingQty.clear()
+		self.manufacturingFile.clear()
+		self.manufacturingStatus.clear()
+		self.allNotCompletedTasks.clear()
+		with open('Manufacturing/AllPartInfo.json') as e:
+			data = json.loads(e.read())
+			for p in data['Part']:
+				self.manufacturingName.append(p['name'])
+				self.manufacturingSubteam.append(p['subteam'])
+				self.manufacturingDate.append(p['date'])
+				self.manufacturingQty.append(p['qty'])
+				self.manufacturingFile.append(p['file'])
+				self.manufacturingStatus.append(p['status'])
+
+		for (status,file) in zip(self.manufacturingStatus, self.manufacturingFile):
+			if status != "Complete":
+				self.allNotCompletedTasks.append(file)
 

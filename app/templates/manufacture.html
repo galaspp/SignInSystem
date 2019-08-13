@@ -15,6 +15,9 @@
             height: 50px;
             font-size: 25px;
         }
+        ul{
+            font-size: 25px;
+        }
         h1{
             font-size: 40px;
         }
@@ -31,6 +34,10 @@
             height: 20px;
             width: 20px;
         }
+        .boxed {
+            border: 1px solid white ;
+            background:#fff;
+        }
     </style>  
     <body>
     <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
@@ -38,9 +45,9 @@
     <form action="" method="post" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p style="color:white; height: 60px;">
-            {% for row in form.allNotCompletedTasks %}
-                <ul>
-                    <li style="color:white;"> {{row}} </li>
+            {% for i in range(0, len) %}
+                <ul class="boxed">
+                {{form.manufacturingName[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingSubteam[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingFile[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingStatus[i]}}<br>
                 </ul>
             {% endfor %}
         </p>

@@ -1,5 +1,4 @@
 import os
-import json
 import urllib.request
 from flask import render_template, flash, redirect, url_for, request
 from werkzeug.utils import secure_filename
@@ -102,18 +101,24 @@ def manufactureform():
 				f.write("QTY: %s \r\n"%(form4.manufactureQTY.data))
 				f.close()
 
-			with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.json"), "a+") as e:
-				data={}
+			if not os.path.exists('Manufacturing/AllPartInfo.txt'):
+				with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as d:
+					d.write("name,subteam,date,qty,file,progress\r\n")
+					d.close()
+
+			with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as e:
 				dueDate = "%s/%s/%s"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data)
-				data['Part']=[]
-				data['Part'].append({'name': form4.manufactureFirstName.data, 'subteam': form4.manufactureSubteam.data, 'date': dueDate, 'qty': form4.manufactureQTY.data, 'file': filename, 'status': 'Not Started', 'hours': '0'})
-				json.dump(data, e)
+				e.write("%s,%s,%s,%s,%s,Not Started\r\n"%(form4.manufactureFirstName.data, form4.manufactureSubteam.data, dueDate,form4.manufactureQTY.data, filename))
+				e.close()
 
 			flash('File successfully uploaded')
 			return redirect(url_for('manufactureform'))
 	return render_template('manufactureform.html', title='Manufacture Part Form', form=form4)
 
+
 @app.route('/manufacture', methods=['GET', 'POST'])
 def manufacturingShowcase():
 	form5 = ManufacturingProgressPage()
-	return render_template('manufacture.html', title='Manufacture Progress', form=form5)
+	if request.method == 'GET':
+		form5.updateForm()
+	return render_template('manufacture.html', title='Manufacture Progress', form=form5, len=len(form5.manufacturingName))
