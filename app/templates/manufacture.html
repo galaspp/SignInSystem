@@ -6,7 +6,7 @@
             border-style: solid;
             background-color: #800000;
             width: 900px;
-            height: 1447px;
+            min-height: 100vh;
             margin: auto;
             position: relative;
         }
@@ -38,6 +38,14 @@
             border: 1px solid black ;
             background:#fff;
         }
+        .wrap { 
+            /*white-space: pre-wrap;      /* CSS3 */   
+            white-space: -moz-pre-wrap; /* Firefox */    
+            /*white-space: -pre-wrap;     /* Opera <7 */   
+            /*white-space: -o-pre-wrap;   /* Opera 7 */    
+            word-wrap: break-word;      /* IE */
+            word-break: break-word;
+        }
     </style>  
     <body>
     <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
@@ -45,11 +53,29 @@
     <form action="" method="post" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
-        <pre style="color:white; height: 15px; font-size: 25px;" class="tab">&nbsp;&nbsp;&nbsp;Name    Subteam     Due Date    QTY     File     Status </pre>
+        
+        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;&nbsp;&nbsp;Name       Subteam     Due Date    QTY     &nbsp;File        &nbsp;&nbsp;&nbsp;Status</pre>
         <p style="color:white; height: 0px;">
             {% for i in range(0, len) %}
                 <ul class="boxed">
-                {{form.manufacturingName[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingSubteam[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingFile[i]}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingStatus[i]}}<br>
+                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
+                        {{form.manufacturingName[i]}}
+                    </div>
+                    <div style="width: 100px; display: inline-block;"align="center">
+                        {{form.manufacturingSubteam[i]}}
+                    </div>
+                    <div style="width: 100px; display: inline-block;"align="center">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}
+                    </div>
+                     <div style="width: 120px; display: inline-block;"align="center">
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}
+                    </div>
+                     <div style="width: 150px; display: inline-block;"align="center" class="wrap">
+                        {{form.manufacturingFile[i]}}  
+                    </div>
+                     <div style="width: 150px; display: inline-block;"align="center">
+                        {{form.manufacturingStatus[i]}}<br> 
+                    </div>
                 </ul>
             {% endfor %}
         </p>
