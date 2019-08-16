@@ -97,20 +97,21 @@ class ManufacturingProgressPage(FlaskForm):
 	manufacturingQty = []
 	manufacturingFile = []
 	manufacturingStatus = []
-	with open('Manufacturing/AllPartInfo.txt', 'r') as e:
-		data = csv.reader(e, delimiter=',')
-		lineCount = 0
-		for p in data:
-			if lineCount == 0:
-				lineCount+=1
-			else:
-				manufacturingName.append(p[0])
-				manufacturingSubteam.append(p[1])
-				manufacturingDate.append(p[2])
-				manufacturingQty.append(p[3])
-				manufacturingFile.append(p[4])
-				manufacturingStatus.append(p[5])
-				lineCount+=1
+	if os.path.exists('Manufacturing/AllPartInfo.txt'):
+		with open('Manufacturing/AllPartInfo.txt', 'r') as e:
+			data = csv.reader(e, delimiter=',')
+			lineCount = 0
+			for p in data:
+				if lineCount == 0:
+					lineCount+=1
+				else:
+					manufacturingName.append(p[0])
+					manufacturingSubteam.append(p[1])
+					manufacturingDate.append(p[2])
+					manufacturingQty.append(p[3])
+					manufacturingFile.append(p[4])
+					manufacturingStatus.append(p[5])
+					lineCount+=1
 
 	allNotCompletedTasks = []
 	for (status,file) in zip(manufacturingStatus, manufacturingFile):
@@ -130,20 +131,21 @@ class ManufacturingProgressPage(FlaskForm):
 		self.manufacturingFile.clear()
 		self.manufacturingStatus.clear()
 		self.allNotCompletedTasks.clear()
-		with open('Manufacturing/AllPartInfo.txt', 'r') as e:
-			data = csv.reader(e, delimiter=',')
-			lineCount = 0
-			for p in data:
-				if lineCount == 0:
-					lineCount+=1
-				else:
-					self.manufacturingName.append(p[0])
-					self.manufacturingSubteam.append(p[1])
-					self.manufacturingDate.append(p[2])
-					self.manufacturingQty.append(p[3])
-					self.manufacturingFile.append(p[4])
-					self.manufacturingStatus.append(p[5])
-					lineCount+=1
+		if os.path.exists('Manufacturing/AllPartInfo.txt'):
+			with open('Manufacturing/AllPartInfo.txt', 'r') as e:
+				data = csv.reader(e, delimiter=',')
+				lineCount = 0
+				for p in data:
+					if lineCount == 0:
+						lineCount+=1
+					else:
+						self.manufacturingName.append(p[0])
+						self.manufacturingSubteam.append(p[1])
+						self.manufacturingDate.append(p[2])
+						self.manufacturingQty.append(p[3])
+						self.manufacturingFile.append(p[4])
+						self.manufacturingStatus.append(p[5])
+						lineCount+=1
 
 		for (status,file) in zip(self.manufacturingStatus, self.manufacturingFile):
 			if status != 'Completed':
@@ -157,13 +159,13 @@ class ManufacturingProgressPage(FlaskForm):
 				break
 			else:
 				lineCount+=1
+		if os.path.exists('Manufacturing/AllPartInfo.txt'):
+			file = csv.reader(open('Manufacturing/AllPartInfo.txt'))
+			lines = list(file)
+			lines[lineCount][5] = updatedProgress
 
-		file = csv.reader(open('Manufacturing/AllPartInfo.txt'))
-		lines = list(file)
-		lines[lineCount][5] = updatedProgress
-
-		writer = csv.writer(open('Manufacturing/AllPartInfo.txt', 'w'))
-		writer.writerows(lines)
+			writer = csv.writer(open('Manufacturing/AllPartInfo.txt', 'w'))
+			writer.writerows(lines)
 
 class taskForm(FlaskForm):
 	taskName = StringField('Task Name', validators=[DataRequired()])
@@ -189,21 +191,22 @@ class taskProgressPage(FlaskForm):
 	assigned = []
 	taskHours = []
 	taskStatus = []
-	with open('AllTaskInfo.txt', 'r') as e:
-		data = csv.reader(e, delimiter=',')
-		lineCount = 0
-		for p in data:
-			if lineCount == 0:
-				lineCount+=1
-			else:
-				taskName.append(p[0])
-				taskFirstName.append(p[1])
-				assigned.append(p[2])
-				taskSubteam.append(p[3])
-				taskDate.append(p[4])
-				taskHours.append(p[6])
-				taskStatus.append(p[7])
-				lineCount+=1
+	if os.path.exists('AllTaskInfo.txt'):
+		with open('AllTaskInfo.txt', 'r') as e:
+			data = csv.reader(e, delimiter=',')
+			lineCount = 0
+			for p in data:
+				if lineCount == 0:
+					lineCount+=1
+				else:
+					taskName.append(p[0])
+					taskFirstName.append(p[1])
+					assigned.append(p[2])
+					taskSubteam.append(p[3])
+					taskDate.append(p[4])
+					taskHours.append(p[6])
+					taskStatus.append(p[7])
+					lineCount+=1
 
 	allNotCompletedTasks = []
 	for (status,task) in zip(taskStatus, taskName):
@@ -225,21 +228,22 @@ class taskProgressPage(FlaskForm):
 		self.taskHours.clear()
 		self.taskStatus.clear()
 		self.allNotCompletedTasks.clear()
-		with open('AllTaskInfo.txt', 'r') as e:
-			data = csv.reader(e, delimiter=',')
-			lineCount = 0
-			for p in data:
-				if lineCount == 0:
-					lineCount+=1
-				else:
-					self.taskName.append(p[0])
-					self.taskFirstName.append(p[1])
-					self.taskSubteam.append(p[3])
-					self.assigned.append(p[2])
-					self.taskDate.append(p[4])
-					self.taskHours.append(p[6])
-					self.taskStatus.append(p[7])
-					lineCount+=1
+		if os.path.exists('AllTaskInfo.txt'):
+			with open('AllTaskInfo.txt', 'r') as e:
+				data = csv.reader(e, delimiter=',')
+				lineCount = 0
+				for p in data:
+					if lineCount == 0:
+						lineCount+=1
+					else:
+						self.taskName.append(p[0])
+						self.taskFirstName.append(p[1])
+						self.taskSubteam.append(p[3])
+						self.assigned.append(p[2])
+						self.taskDate.append(p[4])
+						self.taskHours.append(p[6])
+						self.taskStatus.append(p[7])
+						lineCount+=1
 
 		for (status,task) in zip(self.taskStatus, self.taskName):
 			if status != 'Completed':
@@ -253,11 +257,11 @@ class taskProgressPage(FlaskForm):
 				break
 			else:
 				lineCount+=1
+		if os.path.exists('AllTaskInfo.txt'):
+			file = csv.reader(open('AllTaskInfo.txt'))
+			lines = list(file)
+			lines[lineCount][6] = int(lines[lineCount][6]) + int(updatedHours)
+			lines[lineCount][7] = updatedProgress
 
-		file = csv.reader(open('AllTaskInfo.txt'))
-		lines = list(file)
-		lines[lineCount][6] = int(lines[lineCount][6]) + int(updatedHours)
-		lines[lineCount][7] = updatedProgress
-
-		writer = csv.writer(open('AllTaskInfo.txt', 'w'))
-		writer.writerows(lines)
+			writer = csv.writer(open('AllTaskInfo.txt', 'w'))
+			writer.writerows(lines)
