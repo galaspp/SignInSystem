@@ -1,4 +1,5 @@
 import os
+import csv
 import urllib.request
 from flask import render_template, flash, redirect, url_for, request
 from werkzeug.utils import secure_filename
@@ -74,6 +75,7 @@ def order():
 	
 @app.route('/manufactureform', methods=['GET', 'POST'])
 def manufactureform():
+	manufacturearray=[]
 	form4 = ManufactureForm()
 	if request.method == 'POST' and form4.validate_on_submit():
 		if 'file' not in request.files:
@@ -104,11 +106,33 @@ def manufactureform():
 				with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as d:
 					d.write("name,subteam,date,qty,file,progress\r\n")
 					d.close()
+			if os.path.exists('Manufacturing/AllPartInfo.txt'):
+				with open('Manufacturing/AllPartInfo.txt', 'r') as e:
+					data = csv.reader(e, delimiter=',')
+					lineCount = 0
+					for p in data:
+						if lineCount == 0:
+							lineCount+=1
+						else:
+							manufacturearray.append(p[4])
+							lineCount+=1
 
-			with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as e:
-				dueDate = "%s/%s/%s"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data)
-				e.write("%s,%s,%s,%s,%s,Not Started\r\n"%(form4.manufactureFirstName.data, form4.manufactureSubteam.data, dueDate,form4.manufactureQTY.data, filename))
-				e.close()
+				if filename in manufacturearray:
+					newManufactureName = filename
+					count = 1
+					while newManufactureName in manufacturearray:
+						newManufactureName = filename + str(count)
+						count+=1
+
+					with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as e:
+						dueDate = "%s/%s/%s"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data)
+						e.write("%s,%s,%s,%s,%s,Not Started\r\n"%(form4.manufactureFirstName.data, form4.manufactureSubteam.data, dueDate,form4.manufactureQTY.data, newManufactureName))
+						e.close()
+				else:
+					with open(os.path.join(FINAL_UPLOAD_FOLDER, "AllPartInfo.txt"), "a+") as e:
+						dueDate = "%s/%s/%s"%(form4.manufactureMonth.data, form4.manufactureDay.data, form4.manufactureYear.data)
+						e.write("%s,%s,%s,%s,%s,Not Started\r\n"%(form4.manufactureFirstName.data, form4.manufactureSubteam.data, dueDate,form4.manufactureQTY.data, filename))
+						e.close()
 
 			flash('File successfully uploaded')
 			return redirect(url_for('manufacturingShowcase'))
@@ -129,6 +153,7 @@ def manufacturingShowcase():
 
 @app.route('/taskform', methods=['GET', 'POST'])
 def taskform():
+	taskarray=[]
 	form6 = taskForm()
 	if request.method == 'POST' and form6.validate_on_submit():
 		with open("taskInfo.txt", "a+") as f:
@@ -145,10 +170,32 @@ def taskform():
 				d.write("name,taskname,assign,subteam,date,description,hours,progress\r\n")
 				d.close()
 
-		with open("AllTaskInfo.txt", "a+") as e:
-			dueDate = "%s/%s/%s"%(form6.taskMonth.data,form6.taskDay.data, form6.taskDay.data)
-			e.write("%s,%s,%s,%s,%s,%s,0,Not Started\r\n"%(form6.taskName.data,form6.taskFirstName.data, form6.assignTo.data, form6.taskSubteam.data, dueDate, form6.taskDescription.data))
-			e.close()
+		if os.path.exists('AllTaskInfo.txt'):
+			with open('AllTaskInfo.txt', 'r') as e:
+				data = csv.reader(e, delimiter=',')
+				lineCount = 0
+				for p in data:
+					if lineCount == 0:
+						lineCount+=1
+					else:
+						taskarray.append(p[0])
+						lineCount+=1
+
+			if form6.taskName.data in taskarray:
+				newTaskName = form6.taskName.data
+				count = 1
+				while newTaskName in taskarray:
+					newTaskName = form6.taskName.data + str(count)
+					count+=1
+				with open("AllTaskInfo.txt", "a+") as e:
+					dueDate = "%s/%s/%s"%(form6.taskMonth.data,form6.taskDay.data, form6.taskDay.data)
+					e.write("%s,%s,%s,%s,%s,%s,0,Not Started\r\n"%(newTaskName,form6.taskFirstName.data, form6.assignTo.data, form6.taskSubteam.data, dueDate, form6.taskDescription.data))
+					e.close()
+			else:
+				with open("AllTaskInfo.txt", "a+") as e:
+					dueDate = "%s/%s/%s"%(form6.taskMonth.data,form6.taskDay.data, form6.taskDay.data)
+					e.write("%s,%s,%s,%s,%s,%s,0,Not Started\r\n"%(form6.taskName.data,form6.taskFirstName.data, form6.assignTo.data, form6.taskSubteam.data, dueDate, form6.taskDescription.data))
+					e.close()
 
 		return redirect(url_for('taskShowcase'))
 	return render_template('taskform.html', title='Task Form', form=form6)
