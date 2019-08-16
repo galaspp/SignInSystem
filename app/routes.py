@@ -3,7 +3,7 @@ import urllib.request
 from flask import render_template, flash, redirect, url_for, request
 from werkzeug.utils import secure_filename
 from app import app
-from app.forms import LoginForm, HomePage, OrderPage, ManufactureForm, ManufacturingProgressPage
+from app.forms import LoginForm, HomePage, OrderPage, ManufactureForm, ManufacturingProgressPage, taskForm, taskProgressPage
 
 users = ''
 FINAL_UPLOAD_FOLDER = 'Manufacturing'
@@ -119,8 +119,49 @@ def manufacturingShowcase():
 	form5 = ManufacturingProgressPage()
 	if request.method == 'GET':
 		form5.updateForm()
-	if request.method == 'POST' and form5.validate_on_submit():
+	if form5.redirectToForm.data:
+		return redirect(url_for('manufactureform'))
+	if request.method == 'POST' and form5.validate_on_submit() and form5.submitChange.data:
 		form5.updateProgress(form5.remainingTasks.data, form5.progressOnTask.data)
 		form5.updateForm()
 		return redirect(url_for('manufacturingShowcase'))
 	return render_template('manufacture.html', title='Manufacture Progress', form=form5, len=len(form5.manufacturingName))
+
+@app.route('/taskform', methods=['GET', 'POST'])
+def taskform():
+	form6 = taskForm()
+	if request.method == 'POST' and form6.validate_on_submit():
+		with open("taskInfo.txt", "a+") as f:
+			f.write("Task Name: %s \r\n"%(form6.taskName.data))
+			f.write("First and Last Name: %s %s \r\n"%(form6.taskFirstName.data, form6.taskLastName.data))
+			f.write("Assigned To: %s \r\n"%(form6.assignTo.data))
+			f.write("Subteam: %s \r\n"%(form6.taskSubteam.data))
+			f.write("Due Date: %s/%s/%s \r\n"%(form6.taskMonth.data, form6.taskDay.data, form6.taskDay.data))
+			f.write("Task Description: %s \r\n"%(form6.taskDescription.data))
+			f.close()
+
+		if not os.path.exists('AllTaskInfo.txt'):
+			with open("AllTaskInfo.txt", "a+") as d:
+				d.write("name,taskname,assign,subteam,date,description,hours,progress\r\n")
+				d.close()
+
+		with open("AllTaskInfo.txt", "a+") as e:
+			dueDate = "%s/%s/%s"%(form6.taskMonth.data,form6.taskDay.data, form6.taskDay.data)
+			e.write("%s,%s,%s,%s,%s,%s,0,Not Started\r\n"%(form6.taskName.data,form6.taskFirstName.data, form6.assignTo.data, form6.taskSubteam.data, dueDate, form6.taskDescription.data))
+			e.close()
+
+		return redirect(url_for('taskShowcase'))
+	return render_template('taskform.html', title='Task Form', form=form6)
+
+@app.route('/task', methods=['GET', 'POST'])
+def taskShowcase():
+	form = taskProgressPage()
+	if request.method == 'GET':
+		form.updateForm()
+	if form.redirectToForm.data:
+		return redirect(url_for('taskform'))
+	if request.method == 'POST' and form.validate_on_submit() and form.submitChange.data:
+		form.updateProgress(form.remainingTasks.data, form.progressOnTask.data, form.hoursWorked.data)
+		form.updateForm()
+		return redirect(url_for('taskShowcase'))
+	return render_template('task.html', title='Task Progress', form=form, len=len(form.taskName))

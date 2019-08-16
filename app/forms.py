@@ -119,6 +119,7 @@ class ManufacturingProgressPage(FlaskForm):
 
 	remainingTasks = SelectField('Tasks', choices=allNotCompletedTasks, validators=[DataRequired()])
 	progressOnTask = SelectField('Progress', choices=progress, validators=[DataRequired()])
+	redirectToForm = SubmitField('Create Part Request')
 	submitChange = SubmitField('Submit Change')
 
 	def updateForm(self):
@@ -164,3 +165,99 @@ class ManufacturingProgressPage(FlaskForm):
 		writer = csv.writer(open('Manufacturing/AllPartInfo.txt', 'w'))
 		writer.writerows(lines)
 
+class taskForm(FlaskForm):
+	taskName = StringField('Task Name', validators=[DataRequired()])
+	taskFirstName = StringField('First Name', validators=[DataRequired()])
+	taskLastName = StringField('Last Name', validators=[DataRequired()])
+	assignTo = StringField('Assign To', validators=[DataRequired()])
+
+	taskSubteam = SelectField('Subteam', choices=allSubteams, validators=[DataRequired()])
+
+	taskMonth = StringField('Month')
+	taskDay = StringField('Day')
+	taskYear = StringField('Year')
+
+	taskDescription = TextAreaField("Task Description")
+
+	submitTask = SubmitField('Submit Task')
+
+class taskProgressPage(FlaskForm):
+	taskName = []
+	taskFirstName = []
+	taskSubteam = []
+	taskDate = []
+	assigned = []
+	taskHours = []
+	taskStatus = []
+	with open('AllTaskInfo.txt', 'r') as e:
+		data = csv.reader(e, delimiter=',')
+		lineCount = 0
+		for p in data:
+			if lineCount == 0:
+				lineCount+=1
+			else:
+				taskName.append(p[0])
+				taskFirstName.append(p[1])
+				assigned.append(p[2])
+				taskSubteam.append(p[3])
+				taskDate.append(p[4])
+				taskHours.append(p[6])
+				taskStatus.append(p[7])
+				lineCount+=1
+
+	allNotCompletedTasks = []
+	for (status,task) in zip(taskStatus, taskName):
+		if status != "Completed":
+			allNotCompletedTasks.append([task,task])
+
+	remainingTasks = SelectField('Tasks', choices=allNotCompletedTasks, validators=[DataRequired()])
+	progressOnTask = SelectField('Progress', choices=progress, validators=[DataRequired()])
+	hoursWorked = StringField('hoursWorked', validators=[DataRequired()])
+	redirectToForm = SubmitField('Create Task')
+	submitChange = SubmitField('Submit Change')
+
+	def updateForm(self):
+		self.taskName.clear()
+		self.taskFirstName.clear()
+		self.taskSubteam.clear()
+		self.taskDate.clear()
+		self.assigned.clear()
+		self.taskHours.clear()
+		self.taskStatus.clear()
+		self.allNotCompletedTasks.clear()
+		with open('AllTaskInfo.txt', 'r') as e:
+			data = csv.reader(e, delimiter=',')
+			lineCount = 0
+			for p in data:
+				if lineCount == 0:
+					lineCount+=1
+				else:
+					self.taskName.append(p[0])
+					self.taskFirstName.append(p[1])
+					self.taskSubteam.append(p[3])
+					self.assigned.append(p[2])
+					self.taskDate.append(p[4])
+					self.taskHours.append(p[6])
+					self.taskStatus.append(p[7])
+					lineCount+=1
+
+		for (status,task) in zip(self.taskStatus, self.taskName):
+			if status != 'Completed':
+				self.allNotCompletedTasks.append([task, task])
+
+
+	def updateProgress(self, submitTask, updatedProgress, updatedHours):
+		lineCount = 1
+		for tasks in self.taskName:
+			if tasks == submitTask:
+				break
+			else:
+				lineCount+=1
+
+		file = csv.reader(open('AllTaskInfo.txt'))
+		lines = list(file)
+		lines[lineCount][6] = int(lines[lineCount][6]) + int(updatedHours)
+		lines[lineCount][7] = updatedProgress
+
+		writer = csv.writer(open('AllTaskInfo.txt', 'w'))
+		writer.writerows(lines)

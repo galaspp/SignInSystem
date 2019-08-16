@@ -1,0 +1,6 @@
+name,taskname,assign,subteam,date,description,hours,progress
+Yeet,Piotr,Andrew,Aero,12/12/12,,56,Completed
+Yeet,Piotr,Piotr,Chassis,12/12/12,,0,Not Started
+Yeet,Piotr,Piotr Galas,Electrical,12/12/12,,0,Not Started
+Yeet,Piotr,Piotr Galas,Engine,12/12/12,,0,Not Started
+Yeet,Piotr,Piotr Galas,Unsprung,12/12/12,,0,Not Started

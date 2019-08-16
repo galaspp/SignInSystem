@@ -44,6 +44,7 @@
     <h1 style="color:white;">Manufacture Progress</h1>
     <form action="" method="post" novalidate enctype="multipart/form-data">
         {{ form.hidden_tag() }}
+        <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
         <pre style="color:white; height: 15px; font-size: 25px;" class="tab">&nbsp;&nbsp;&nbsp;Name    Subteam     Due Date    QTY     File     Status </pre>
         <p style="color:white; height: 0px;">
             {% for i in range(0, len) %}
