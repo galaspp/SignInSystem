@@ -216,9 +216,9 @@ def taskShowcase():
 
 if __name__ == '__main__':
 	app.config['SERVER_NAME'] = 'rosegpe.com'
-	app.config.from_object('__name__')
+	app.config.from_object(__name__)
 	app.run(host='0.0.0.0', port=8000, debug=True)
 else:
 	app.config['SERVER_NAME'] = 'rosegpe.com'
-	app.config.from_object('__name__')
+	app.config.from_object(__name__)
 	app.run(host='0.0.0.0', port=8000, debug=True)
