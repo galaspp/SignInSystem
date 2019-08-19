@@ -214,5 +214,5 @@ def taskShowcase():
 	return render_template('task.html', title='Task Progress', form=form, len=len(form.taskName))
 
 
-if __nane__ == '__main__':
+if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8000, debug=True)
