@@ -217,4 +217,5 @@ def taskShowcase():
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8000, debug=True)
 else:
+	app.config['SERVER_NAME'] = 'RoseGPE.com'
 	app.run(host='0.0.0.0', port=8000, debug=True)
