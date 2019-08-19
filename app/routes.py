@@ -215,10 +215,10 @@ def taskShowcase():
 
 
 if __name__ == '__main__':
-	app.config['SERVER_NAME'] = 'rosegpe.com:8000'
+	app.config['SERVER_NAME'] = 'rosegpe:8000'
 	app.config.from_object(__name__)
 	app.run(debug=True)
 else:
-	app.config['SERVER_NAME'] = 'rosegpe.com:8000'
+	app.config['SERVER_NAME'] = 'rosegpe:8000'
 	app.config.from_object(__name__)
 	app.run(debug=True)
