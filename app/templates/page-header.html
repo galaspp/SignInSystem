@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+
+<div style="position: absolute; right: 0px; top: 0px;">
+    <h5
+        style="color: white; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; margin: 0px;">
+        <a href="/adminlogin" style="color: white;">[Admin Login]</a></h5>
+</div>
+
+<div class="jumbotron text-center titletop" id="titlecard" style="text-align: center;">
+
+    <h1 style="text-shadow: 0px 0px 20px black; color: white; font-family: Calibri; font-size:200%;">
+        Rose GPE Server</h1>
+
+    <div style="text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;">
+
+        <!-- {% for link in links %}
+        <th style='max-width:150px'>
+            <h3><a href={{link.url}} style="color: white; font-size: 100%">{{link.title}}</a></h3>
+        </th>
+        {% endfor %} -->
+
+    </div>
+</div>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            {% for link in links %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{link.url}}">{{link.title}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

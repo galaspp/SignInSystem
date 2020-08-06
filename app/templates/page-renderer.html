@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="application-name" content="Main Page Meta">
+    <meta charset="UTF-8">
+    <meta name="author" content="Wojciech Zacherek">
+    <meta name="description" content="The main homepage for Wojciech's personal server.">
+    <meta name="keywords" content="Wojciech, Flask, The Polish Hammer">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <!--<meta http-equiv="content-security-policy" content="default-src 'self'">-->
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/basedefault.css') }}">
+
+</head>
+
+<!-- Render header  -->
+{% block title %}
+{% include "page-header.html" %}
+{% endblock %}
+
+
+<!-- Render Main content -->
+{% block body %}
+{% include body_layout %}
+{% endblock %}
+
+<!-- Render footer -->
+{% block end_card %}
+{% include "page-footer.html" %}
+{% endblock %}
+
+</html>

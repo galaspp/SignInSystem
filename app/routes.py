@@ -30,7 +30,7 @@ def signup():
         e.write("%s@rose-hulman.edu, " %(form.username.data))
         e.close()
         return redirect(url_for('index'))
-    return render_template('login.html', title='Sign Up', form=form)
+    return render_template('page-renderer.html',body_layout='body1.html',content='login.html', title='Sign Up', form=form, links=get_links())
 
 def has_no_empty_params(rule):
     defaults = rule.defaults if rule.defaults is not None else ()
@@ -44,7 +44,7 @@ def get_links():
         # and rules that require parameters
         if "GET" in rule.methods and has_no_empty_params(rule):
             url = url_for(rule.endpoint, **(rule.defaults or {}))
-            links.append((url, rule.endpoint))
+            links.append({'url':url, 'title':rule.endpoint})
     # links is now a list of url, endpoint tuples
     return links
 
