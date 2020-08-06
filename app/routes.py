@@ -60,7 +60,7 @@ def index():
 	user = {'username': users}
 	if request.method == 'POST':
 		return redirect(url_for('signup'))
-	return render_template('index.html', title='Home', user=user, form=form2)
+	return render_template('page-renderer.html',body_layout='index.html', title='Home', user=user, form=form2, links=get_links())
 
 @app.route('/order', methods=['GET', 'POST'])
 def order():
@@ -93,7 +93,7 @@ def order():
 		e.write("QTY: %s  Link: %s \r\n"%(form3.qty9.data, form3.link9.data))
 		e.close()
 		return redirect(url_for('order'))
-	return render_template('order.html', title='Order Form', form=form3)
+	return render_template('page-renderer.html',body_layout='order.html', title='Order Form', form=form3, links=get_links())
 	
 @app.route('/manufactureform', methods=['GET', 'POST'])
 def manufactureform():
@@ -158,7 +158,7 @@ def manufactureform():
 
 			flash('File successfully uploaded')
 			return redirect(url_for('manufacturingShowcase'))
-	return render_template('manufactureform.html', title='Manufacture Part Form', form=form4)
+	return render_template('page-renderer.html',body_layout='manufactureform.html', title='Manufacture Part Form', form=form4, links=get_links())
 
 @app.route('/manufacture', methods=['GET', 'POST'])
 def manufacturingShowcase():
@@ -171,7 +171,7 @@ def manufacturingShowcase():
 		form5.updateProgress(form5.remainingTasks.data, form5.progressOnTask.data)
 		form5.updateForm()
 		return redirect(url_for('manufacturingShowcase'))
-	return render_template('manufacture.html', title='Manufacture Progress', form=form5, len=len(form5.manufacturingName))
+	return render_template('page-renderer.html',body_layout='manufacture.html', title='Manufacture Progress', form=form5, len=len(form5.manufacturingName), links=get_links())
 
 @app.route('/taskform', methods=['GET', 'POST'])
 def taskform():
@@ -220,7 +220,7 @@ def taskform():
 					e.close()
 
 		return redirect(url_for('taskShowcase'))
-	return render_template('taskform.html', title='Task Form', form=form6)
+	return render_template('page-renderer.html',body_layout='taskform.html', title='Task Form', form=form6, links=get_links())
 
 @app.route('/task', methods=['GET', 'POST'])
 def taskShowcase():
@@ -233,7 +233,7 @@ def taskShowcase():
 		form.updateProgress(form.remainingTasks.data, form.progressOnTask.data, form.hoursWorked.data)
 		form.updateForm()
 		return redirect(url_for('taskShowcase'))
-	return render_template('task.html', title='Task Progress', form=form, len=len(form.taskName))
+	return render_template('page-renderer.html',body_layout='task.html', title='Task Progress', form=form, len=len(form.taskName), links=get_links())
 
 
 

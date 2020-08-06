@@ -1,0 +1,26 @@
+.titletop{
+    background-color:rgb(127,127,127);
+    margin: 00px;
+    /* background-image: url(../background.png); */
+    background-size: contain;
+    background-image: url(../RoseGPE.png);
+    background-repeat: repeat-x;
+    
+    font-size: x-large;
+}
+
+.footer{
+    background-color: black;
+    margin: 00px;
+    /* background-image: url(../background.png); */
+    background-size: contain;
+    background-repeat: repeat-x;
+    
+    text-align: center;
+    align-content: center;
+    font-size: x-large;
+}
+
+body{
+    margin: 0px;
+}

@@ -1,345 +1,362 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <style>
-        body{
-            border-style: solid;
-            background-color: #800000;
-            min-height: 100vh;
-            width: 900px;
+<style>
+    body {
+        border-style: solid;
+        background-color: #800000;
+        min-height: 100vh;
+        /* width: 900px;
             margin: auto;
-            position: relative;
-        }
-        p{
-            width: 900px;
-            height: 50px;
-            font-size: 25px;
-        }
-        ul{
-            font-size: 25px;
-        }
-        h1{
-            font-size: 40px;
-        }
-        #qtyWidth{
-            width: 25%;
-        }
-        #middle {
-            font-size: 20px;
-        } 
-        #larger {
-            font-size: 25px;
-        } 
-        .checkbox {
-            height: 20px;
-            width: 20px;
-        }
-        .boxed {
-            border: 1px solid black ;
-            background:#fff;
-        }
-    </style>  
-    <body>
-    <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
-    <h1 style="color:white;">Task Progress</h1>
-    <form action="" method="post" novalidate enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
-        <h1 style="color:white;">Aero</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            position: relative; */
+    }
+
+    p {
+        width: 900px;
+        height: 50px;
+        font-size: 25px;
+    }
+
+    ul {
+        /* font-size: 25px; */
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    #qtyWidth {
+        width: 25%;
+    }
+
+    #middle {
+        font-size: 20px;
+    }
+
+    #larger {
+        font-size: 25px;
+    }
+
+    .checkbox {
+        height: 20px;
+        width: 20px;
+    }
+
+    .boxed {
+        border: 1px solid black;
+        background: #fff;
+    }
+</style>
+
+<div class="row justify-content-center">
+    <div class="col-lg-10" style="margin: auto;">
+        <h1 style="color:white;">Task Progress</h1>
+        <form action="" method="post" novalidate enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
+            <h1 style="color:white;">Aero</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Aero" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
-        <h1 style="color:white;">Chassis</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Chassis</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Chassis" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
-        <h1 style="color:white;">Cooling</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Cooling</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Cooling" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">Drivetrain</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Drivetrain</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Drivetrain" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">Electrical</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Electrical</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Electrical" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">Engine</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Engine</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Engine" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">Suspension</h1>
-       <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Suspension</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Suspension" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">Unsprung</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">Unsprung</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "Unsprung" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
 
-        <h1 style="color:white;">N/A</h1>
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
+            <h1 style="color:white;">N/A</h1>
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;Task Name    &nbsp;Name    Subteam     Due Date    Assigned     &nbsp;Status     &nbsp;Hours</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
                 {% if form.taskSubteam[i] == "NA" %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.taskName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskFirstName[i]}}  
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.taskSubteam[i]}} 
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        &nbsp;{{form.assigned[i]}}   
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.taskStatus[i]}}  
-                    </div>
-                     <div style="width: 80px; display: inline-block;"align="center">
-                        {{form.taskHours[i]}}<br>
-                    </div>
-                </ul>
-                {% endif %}
+            <ul class="boxed">
+                <div style="width: 100px; height: auto; display: inline-block;" align="left">
+                    {{form.taskName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskFirstName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.taskSubteam[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{form.taskDate[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    &nbsp;{{form.assigned[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.taskStatus[i]}}
+                </div>
+                <div style="width: 80px; display: inline-block;" align="center">
+                    {{form.taskHours[i]}}<br>
+                </div>
+            </ul>
+            {% endif %}
             {% endfor %}
-        </p>
+            </p>
 
-        <p style="color:white;"> {{ form.remainingTasks(id='middle') }} {{form.hoursWorked(size=2, id='middle')}} {{ form.progressOnTask(id='middle') }} {{ form.submitChange(id='middle') }}</p>
-    </body>
-    </form>
-{% endblock %}
+            <p style="color:white;"> {{ form.remainingTasks(id='middle') }} {{form.hoursWorked(size=2, id='middle')}}
+                {{ form.progressOnTask(id='middle') }} {{ form.submitChange(id='middle') }}</p>
+
+        </form>
+    </div>
+</div>

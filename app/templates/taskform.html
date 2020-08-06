@@ -1,89 +1,94 @@
-{% extends "base.html" %}
+<style>
+    body {
+        border-style: solid;
+        background-color: #800000;
+        /* width: 900px; */
+        /* height: 1447px; */
+        /* margin: auto; */
+        /* position: relative; */
+    }
 
-{% block content %}
-    <style>
-        body{
-            border-style: solid;
-            background-color: #800000;
-            width: 900px;
-            height: 1447px;
-            margin: auto;
-            position: relative;
-        }
-        p{
-            width: 900px;
-            height: 50px;
-            font-size: 25px;
-        }
-        h1{
-            font-size: 40px;
-        }
-        #qtyWidth{
-            width: 25%;
-        }
-        #middle {
-            font-size: 20px;
-        } 
-        #larger {
-            font-size: 25px;
-        } 
-        .checkbox {
-            height: 20px;
-            width: 20px;
-        }
-    </style>  
-    <body>
-    <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
-    <h1 style="color:white;">Task Form</h1>
-    <form action="" method="post" novalidate enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-         <p style="color:white; height: 60px;">
-            {{ form.taskName.label }}<br>
-            {{ form.taskName(size=32, id='middle') }}<br>
-            {% for error in form.taskName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p style="color:white; height: 60px;">
-            {{ form.taskFirstName.label }}<br>
-            {{ form.taskFirstName(size=32, id='middle') }}<br>
-            {% for error in form.taskFirstName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p style="color:white;  height: 60px;">
-            {{ form.taskLastName.label }}<br>
-            {{ form.taskLastName(size=32, id='middle') }}<br>
-            {% for error in form.taskLastName.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-         <p style="color:white;  height: 60px;">
-            {{ form.assignTo.label }}<br>
-            {{ form.assignTo(size=32, id='middle') }}<br>
-            {% for error in form.assignTo.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+    p {
+        width: 900px;
+        height: 50px;
+        font-size: 25px;
+    }
 
-        <h1 style="color:white;">Your Subteam</h1>
-        <p style="color:white;">
-            {{ form.taskSubteam(id='middle') }}<br>
-            {% for error in form.taskSubteam.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
+    h1 {
+        font-size: 40px;
+    }
 
-        <h1 style="color:white;">Required Date</h1>
-        <p style="color:white;">
-            &nbsp;&nbsp;MM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YYYY <br>
-            {{ form.taskMonth(size=2, id='middle') }} {{ form.taskDay(size=2, id='middle') }} {{ form.taskYear(size=4, id='middle') }}<br>
-        </p>
+    #qtyWidth {
+        width: 25%;
+    }
 
-        <h1 style="color:white;">Task Description</h1>
-        <p  style="height: 90px;">{{ form.taskDescription(cols="50", rows="4", id='middle')}}</p>
+    #middle {
+        font-size: 20px;
+    }
 
-        <p>{{ form.submitTask(id='larger') }}</p>
-    </body>
-    </form>
-{% endblock %}
+    #larger {
+        font-size: 25px;
+    }
+
+    .checkbox {
+        height: 20px;
+        width: 20px;
+    }
+</style>
+<div class="row justify-content-center">
+    <div class="col-lg-10" style="margin: auto;">
+        <h1 style="color:white;">Task Form</h1>
+        <form action="" method="post" novalidate enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <p style="color:white; height: auto;">
+                {{ form.taskName.label }}<br>
+                {{ form.taskName(size=32, id='middle') }}<br>
+                {% for error in form.taskName.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p style="color:white; height: auto;">
+                {{ form.taskFirstName.label }}<br>
+                {{ form.taskFirstName(size=32, id='middle') }}<br>
+                {% for error in form.taskFirstName.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p style="color:white;  height: auto;">
+                {{ form.taskLastName.label }}<br>
+                {{ form.taskLastName(size=32, id='middle') }}<br>
+                {% for error in form.taskLastName.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p style="color:white;  height: auto;">
+                {{ form.assignTo.label }}<br>
+                {{ form.assignTo(size=32, id='middle') }}<br>
+                {% for error in form.assignTo.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <h1 style="color:white;">Your Subteam</h1>
+            <p style="color:white;">
+                {{ form.taskSubteam(id='middle') }}<br>
+                {% for error in form.taskSubteam.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+
+            <h1 style="color:white;">Required Date</h1>
+            <p style="color:white;">
+                &nbsp;&nbsp;MM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YYYY <br>
+                {{ form.taskMonth(size=2, id='middle') }} {{ form.taskDay(size=2, id='middle') }}
+                {{ form.taskYear(size=4, id='middle') }}<br>
+            </p>
+
+            <h1 style="color:white;">Task Description</h1>
+            <p style="height: auto;">{{ form.taskDescription(cols="50", rows="4", id='middle')}}</p>
+
+            <p>{{ form.submitTask(id='larger') }}</p>
+            </body>
+        </form>
+    </div>
+</div>

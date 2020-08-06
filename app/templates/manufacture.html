@@ -1,85 +1,96 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <style>
-        body{
-            border-style: solid;
-            background-color: #800000;
-            width: 900px;
+<style>
+    body {
+        border-style: solid;
+        background-color: #800000;
+        /* width: 900px;
             min-height: 100vh;
             margin: auto;
-            position: relative;
-        }
-        p{
-            width: 900px;
-            height: 50px;
-            font-size: 25px;
-        }
-        ul{
-            font-size: 25px;
-        }
-        h1{
-            font-size: 40px;
-        }
-        #qtyWidth{
-            width: 25%;
-        }
-        #middle {
-            font-size: 20px;
-        } 
-        #larger {
-            font-size: 25px;
-        } 
-        .checkbox {
-            height: 20px;
-            width: 20px;
-        }
-        .boxed {
-            border: 1px solid black ;
-            background:#fff;
-        }
-        .wrap { 
-            /*white-space: pre-wrap;      /* CSS3 */   
-            white-space: -moz-pre-wrap; /* Firefox */    
-            /*white-space: -pre-wrap;     /* Opera <7 */   
-            /*white-space: -o-pre-wrap;   /* Opera 7 */    
-            word-wrap: break-word;      /* IE */
-            word-break: break-word;
-        }
-    </style>  
-    <body>
-    <img src="{{url_for('static', filename='RoseGPE.png')}}" style="width:900px;height:150px;" />
-    <h1 style="color:white;">Manufacture Progress</h1>
-    <form action="" method="post" novalidate enctype="multipart/form-data">
-        {{ form.hidden_tag() }}
-        <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
-        
-        <pre style="color:white; height: 15px; font-size: 20px;" class="tab">&nbsp;&nbsp;&nbsp;&nbsp;Name       Subteam     Due Date    QTY     &nbsp;File        &nbsp;&nbsp;&nbsp;Status</pre>
-        <p style="color:white; height: 0px;">
-            {% for i in range(0, len) %}
-                <ul class="boxed">
-                    <div style="width: 100px; height: 30px; display: inline-block;" align="left">
-                        {{form.manufacturingName[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        {{form.manufacturingSubteam[i]}}
-                    </div>
-                    <div style="width: 100px; display: inline-block;"align="center">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}
-                    </div>
-                     <div style="width: 120px; display: inline-block;"align="center">
-                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center" class="wrap">
-                        {{form.manufacturingFile[i]}}  
-                    </div>
-                     <div style="width: 150px; display: inline-block;"align="center">
-                        {{form.manufacturingStatus[i]}}<br> 
-                    </div>
-                </ul>
+            position: relative; */
+    }
+
+    p {
+        width: 900px;
+        height: 50px;
+        font-size: 25px;
+    }
+
+    ul {
+        /* font-size: 25px; */
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    #qtyWidth {
+        width: 25%;
+    }
+
+    #middle {
+        font-size: 20px;
+    }
+
+    #larger {
+        font-size: 25px;
+    }
+
+    .checkbox {
+        height: 20px;
+        width: 20px;
+    }
+
+    .boxed {
+        border: 1px solid black;
+        background: #fff;
+    }
+
+    .wrap {
+        /*white-space: pre-wrap;      /* CSS3 */
+        white-space: -moz-pre-wrap;
+        /* Firefox */
+        /*white-space: -pre-wrap;     /* Opera <7 */
+        /*white-space: -o-pre-wrap;   /* Opera 7 */
+        word-wrap: break-word;
+        /* IE */
+        word-break: break-word;
+    }
+</style>
+<div class="row justify-content-center">
+    <div class="col-lg-10" style="margin: auto;">
+        <h1 style="color:white;">Manufacture Progress</h1>
+        <form action="" method="post" novalidate enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <p style="color:white;" align="right"> {{form.redirectToForm(id='middle')}} </p>
+
+            <pre style="color:white; height: auto; font-size: 20px;"
+                class="tab">&nbsp;&nbsp;&nbsp;&nbsp;Name       Subteam     Due Date    QTY     &nbsp;File        &nbsp;&nbsp;&nbsp;Status</pre>
+            <p style="color:white; height: 0px;">
+                {% for i in range(0, len) %}
+            <ul class="boxed">
+                <div style="width: 100px; height: 30px; display: inline-block;" align="left">
+                    {{form.manufacturingName[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    {{form.manufacturingSubteam[i]}}
+                </div>
+                <div style="width: 100px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingDate[i]}}
+                </div>
+                <div style="width: 120px; display: inline-block;" align="center">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{form.manufacturingQty[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center" class="wrap">
+                    {{form.manufacturingFile[i]}}
+                </div>
+                <div style="width: 150px; display: inline-block;" align="center">
+                    {{form.manufacturingStatus[i]}}<br>
+                </div>
+            </ul>
             {% endfor %}
-        </p>
-        <p style="color:white;"> {{ form.remainingTasks(id='middle') }} {{ form.progressOnTask(id='middle') }} {{ form.submitChange(id='middle') }}</p>
-    </body>
-    </form>
-{% endblock %}
+            </p>
+            <p style="color:white;"> {{ form.remainingTasks(id='middle') }} {{ form.progressOnTask(id='middle') }}
+                {{ form.submitChange(id='middle') }}</p>
+            </body>
+        </form>
+    </div>
+</div>
